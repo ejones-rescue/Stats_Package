@@ -238,4 +238,4 @@ def xtab_all(df,DV_list,IV):
 
 #test function:
 def hooray(string):
-    return string + ' hooray!'
+    return string + ' HOORAY!'
