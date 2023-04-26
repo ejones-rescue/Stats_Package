@@ -7,7 +7,7 @@ DESCRIPTION = 'Stats Package created for common data anaysis tasks in Rescues re
 
 # Setting up
 setup(
-    name="stats_package",
+    name="stats_package_TEST",
     version=VERSION,
     author="Elisabeth Jones",
     author_email="<ejones@rescueagency.com>",
