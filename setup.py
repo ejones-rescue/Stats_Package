@@ -1,25 +1,20 @@
-from setuptools import setup, find_packages
-import codecs
-import os
+import setuptools
 
-VERSION = '0.0.1'
-DESCRIPTION = 'Stats Package created for common data anaysis tasks in Rescues research division'
+with open("README.md", "r", encoding="utf-8") as fh:
+    long_description = fh.read()
 
-# Setting up
-setup(
-    name="stats_package_TEST",
-    version=VERSION,
-    author="Elisabeth Jones",
-    author_email="<ejones@rescueagency.com>",
-    description=DESCRIPTION,
-    packages=find_packages(),
+setuptools.setup(
+    name='stats_package_test',
+    version='0.0.0',
+    author='E.Jones',
+    author_email='ejones@rescueagency.com',
+    description='Testing installation of Package',
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    url='https://github.com/rescueds/Stats_Package_TEST.git',
+    project_urls = {
+    },
+    license='MIT',
+    packages=['stats_analysis_module', 'stats_descriptives_module'],
     install_requires=['pandas', 'numpy', 'matplotlib', 'researchpy', 'scipy'],
-    classifiers=[
-        "Development Status :: 1 - Planning",
-        "Intended Audience :: Developers",
-        "Programming Language :: Python :: 3",
-        "Operating System :: Unix",
-        "Operating System :: MacOS :: MacOS X",
-        "Operating System :: Microsoft :: Windows",
-    ]
 )
