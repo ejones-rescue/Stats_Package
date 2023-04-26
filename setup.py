@@ -15,6 +15,6 @@ setuptools.setup(
     project_urls = {
     },
     license='MIT',
-    packages=['stats_analysis_module', 'stats_descriptives_module'],
+    packages=['Stats_Package_TEST'],
     install_requires=['pandas', 'numpy', 'matplotlib', 'researchpy', 'scipy'],
 )
