@@ -16,12 +16,6 @@ import scipy.stats
 from statsmodels.stats.multitest import multipletests
 from scipy.stats.stats import pearsonr
 
-# %%
-#FOR TESTING. 
-##read in data file
-#df = pd.read_pickle(r'../../i.Data/BTH_Tracker_benchmark_excluded.pkl')
-##includes only
-#df = df[df['Inclusion_Status'] == 1]
 
 # %% [markdown]
 # #### Order vars function - not user facing
@@ -135,6 +129,7 @@ def ttest_1sample_1(df, DV, population_mean, significance_level):
 #One sample t-test function, user facing, takes df, list of DV's, and list of population means
 def ttest_1sample(df, DV_list, population_mean_list, significance_level):
     all_df = pd.DataFrame()
+    df[DV_list] = df[DV_list].astype(float) #convert dv's to float
     for x, y in zip(DV_list, population_mean_list,):
         z = ttest_1sample_1(df, x, y, significance_level)
         all_df = all_df.append(z)
@@ -142,25 +137,26 @@ def ttest_1sample(df, DV_list, population_mean_list, significance_level):
 
 # %% [markdown]
 # ### Two-Sample (aka independent samples)
-# Requires: 1 continuous measurement (DV) & a binary categorical measurement to define groups (IV)
+# Requires: 1 continuous measurement (DV) & two IV subcategories to compare 
 
-# %%
 #Two sample t-test function, just one test, not user facing
-def ttest_2sample_1(df, DV, IV, significance_level):
-    t_statistic, pval = scipy.stats.ttest_ind(df[DV].dropna(), df[IV].dropna())
+def ttest_2sample_1(df, DV, IV, sub_category_1, sub_category_2, significance_level):
+    t_statistic, pval = scipy.stats.ttest_ind(df[DV][df[IV] == sub_category_1], 
+                                              df[DV][df[IV] == sub_category_2], nan_policy = 'omit')
     ttest_df = pd.DataFrame(data = {'t statistic': t_statistic, 'p value': pval}, index = [0])
     ttest_df['Significance' + ' (<' + str(significance_level) + ")"] = np.where(ttest_df['p value'] < significance_level, True, False)
     ttest_df['DV'] = DV
     ttest_df['IV'] = IV
-    ttest_df = ttest_df[['IV', 'DV', 't statistic', 'p value', 'Significance (<0.05)']]
+    ttest_df['Subcategories'] = sub_category_1 + " , " + sub_category_2
+    ttest_df = ttest_df[['IV', "Subcategories", 'DV', 't statistic', 'p value', 'Significance (<0.05)']]
     return ttest_df
 
-# %%
-#Two sample t-test function, user facing, takes df, list of DV's, and one IV
-def ttest_2sample(df, DV_list, IV, significance_level):
+#Two sample t-test function, user facing, takes df, list of DV's, your IV, and your subcategories (only 2 allowed)
+def ttest_2sample(df, DV_list, IV, sub_category_1, sub_category_2, significance_level):
     all_df = pd.DataFrame()
+    df[DV_list] = df[DV_list].astype(float) #convert dv's to float
     for x in DV_list:
-        z = ttest_2sample_1(df, x, IV, significance_level)
+        z = ttest_2sample_1(df, x, IV, sub_category_1, sub_category_2, significance_level)
         all_df = all_df.append(z)
     return all_df
 

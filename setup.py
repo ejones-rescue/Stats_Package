@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='Stats_Package_TEST',
-    version='0.0.3',
+    version='0.0.4',
     author='E.Jones',
     author_email='ejones@rescueagency.com',
-    description='Testing installation of Package',
+    description='Stats Package for use by the Rescues Research Dept',
     long_description=long_description,
     long_description_content_type="text/markdown",
     url='https://github.com/rescueds/Stats_Package_TEST.git',

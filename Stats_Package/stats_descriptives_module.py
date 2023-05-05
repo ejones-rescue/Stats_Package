@@ -94,6 +94,16 @@ def desc(df, var_list):
         desc_df = desc_df[['Variable', 'Summary_Stats', 'Results']]
     return desc_df
 
+#descriptives with subcategories (count, mean, st dev, intervals), takes df, variable list, sub categoy variable, and sub categories
+def desc_subcats(df,var_list,sub_category_var,sub_category_list):
+    desc_df = pd.DataFrame()
+    for x in sub_category_list:
+        y = desc(df[df[sub_category_var] == x],var_list)
+        y['Subcategory'] = x
+        desc_df = desc_df.append(y)
+        desc_df = desc_df[['Variable','Subcategory', 'Summary_Stats', 'Results']]
+    return desc_df
+
 # %% [markdown]
 # #### Crosstabs Functions
 
@@ -213,7 +223,7 @@ def xtab_all1(df,DV,IV):
     y = y.round(2) #round to 3 decimals
     y = y.astype(str)
     y = y + '%'
-    y['Counts/Percents'] = 'Row Percents'
+    y['Counts/Percents'] = 'Total Percents'
 
     
     z = pd.concat([x,y])
