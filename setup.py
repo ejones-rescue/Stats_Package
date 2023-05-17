@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name='Stats_Package',
-    version='0.0.4',
+    version='0.0.5',
     author='E.Jones',
     author_email='ejones@rescueagency.com',
     description='Stats Package for use by the Rescues Research Dept',
