@@ -140,23 +140,23 @@ def ttest_1sample(df, DV_list, population_mean_list, significance_level):
 # Requires: 1 continuous measurement (DV) & two IV subcategories to compare 
 
 #Two sample t-test function, just one test, not user facing
-def ttest_2sample_1(df, DV, IV, sub_category_1, sub_category_2, significance_level):
-    t_statistic, pval = scipy.stats.ttest_ind(df[DV][df[IV] == sub_category_1], 
-                                              df[DV][df[IV] == sub_category_2], nan_policy = 'omit')
+def ttest_2sample_1(df, DV, IV, subcategory_list, significance_level):
+    t_statistic, pval = scipy.stats.ttest_ind(df[DV][df[IV] == subcategory_list[0]], 
+                                              df[DV][df[IV] == subcategory_list[1]], nan_policy = 'omit')
     ttest_df = pd.DataFrame(data = {'t statistic': t_statistic, 'p value': pval}, index = [0])
     ttest_df['Significance' + ' (<' + str(significance_level) + ")"] = np.where(ttest_df['p value'] < significance_level, True, False)
     ttest_df['DV'] = DV
     ttest_df['IV'] = IV
-    ttest_df['Subcategories'] = sub_category_1 + " , " + sub_category_2
+    ttest_df['Subcategories'] = str(subcategory_list)
     ttest_df = ttest_df[['IV', "Subcategories", 'DV', 't statistic', 'p value', 'Significance (<0.05)']]
     return ttest_df
 
 #Two sample t-test function, user facing, takes df, list of DV's, your IV, and your subcategories (only 2 allowed)
-def ttest_2sample(df, DV_list, IV, sub_category_1, sub_category_2, significance_level):
+def ttest_2sample(df, DV_list, IV, subcategory_list, significance_level):
     all_df = pd.DataFrame()
     df[DV_list] = df[DV_list].astype(float) #convert dv's to float
     for x in DV_list:
-        z = ttest_2sample_1(df, x, IV, sub_category_1, sub_category_2, significance_level)
+        z = ttest_2sample_1(df, x, IV, subcategory_list, significance_level)
         all_df = all_df.append(z)
     return all_df
 
